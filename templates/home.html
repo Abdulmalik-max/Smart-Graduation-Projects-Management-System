@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Mashrooi | Smart GPMS{% endblock %}
+
+{% block content %}
+<section class="hero-section mb-5">
+    <div class="container position-relative z-1">
+        {% if user.is_authenticated %}
+            <span class="badge bg-white text-primary mb-3 px-3 py-2 rounded-pill fw-bold" style="color: var(--brand) !important;">
+                {{ user.get_role_display }} Account
+            </span>
+            <h1 class="hero-title">Welcome back, {{ user.get_full_name|default:user.username }}</h1>
+            <p class="hero-subtitle">Continue where you left off. Your dashboard is ready for you.</p>
+            <div class="d-flex justify-content-center gap-3 flex-wrap mt-4">
+                <a href="{{ dashboard_url }}" class="btn-brand px-5 py-3 fs-5">
+                    <i class="bi bi-speedometer2"></i> Go to Dashboard
+                </a>
+            </div>
+        {% else %}
+            <h1 class="hero-title">Mashrooi | مشروعي</h1>
+            <p class="hero-subtitle">
+                A unified platform that connects students, supervisors, committees, and administrators
+                to streamline graduation project proposals at Sana'a University.
+            </p>
+            <div class="d-flex justify-content-center gap-3 flex-wrap mt-4">
+                <a href="{% url 'login' %}" class="btn btn-light px-5 py-3 fs-5 rounded-4 fw-bold text-primary">
+                    Login
+                </a>
+                <a href="{% url 'student_register' %}" class="btn-brand px-5 py-3 fs-5">
+                    Register
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Features -->
+<section class="mb-5 py-3">
+    <div class="text-center mb-5">
+        <h2 class="fw-bold section-title">Everything in one place</h2>
+        <p class="text-muted section-sub">Designed around the way graduation projects actually work.</p>
+    </div>
+    <div class="row g-4">
+        <div class="col-md-6 col-lg-3">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="bi bi-person-plus-fill"></i></div>
+                <h5 class="fw-bold mb-2">Student Registration</h5>
+                <p class="text-muted small mb-0">Create an account with your university email and student ID. Instant access to your dashboard.</p>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="bi bi-envelope-paper-fill"></i></div>
+                <h5 class="fw-bold mb-2">Staff Invitation</h5>
+                <p class="text-muted small mb-0">Administrators invite supervisors, committee members, and coordinators by email with secure links.</p>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="bi bi-shield-lock-fill"></i></div>
+                <h5 class="fw-bold mb-2">Role-Based Access</h5>
+                <p class="text-muted small mb-0">Each role sees exactly what they need — nothing more. Permissions are strictly enforced.</p>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="bi bi-clock-history"></i></div>
+                <h5 class="fw-bold mb-2">Security &amp; Audit</h5>
+                <p class="text-muted small mb-0">3-attempt lockout, secure password reset, and a full audit trail of every action taken.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Roles -->
+<section class="mb-5 py-3">
+    <div class="text-center mb-4">
+        <h2 class="fw-bold section-title" style="font-size: 2rem;">Built for every role</h2>
+        <p class="text-muted">Five carefully separated roles, one shared workflow.</p>
+    </div>
+    <div class="row g-3 justify-content-center">
+        <div class="col-6 col-md-4 col-lg-2">
+            <div class="role-pill">
+                <i class="bi bi-mortarboard"></i>
+                <h6 class="fw-bold mb-1">Student</h6>
+                <p class="text-muted small mb-0">Register projects</p>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+            <div class="role-pill">
+                <i class="bi bi-person-video3"></i>
+                <h6 class="fw-bold mb-1">Supervisor</h6>
+                <p class="text-muted small mb-0">Guide projects</p>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+            <div class="role-pill">
+                <i class="bi bi-people"></i>
+                <h6 class="fw-bold mb-1">Committee</h6>
+                <p class="text-muted small mb-0">Evaluate submissions</p>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+            <div class="role-pill">
+                <i class="bi bi-diagram-3"></i>
+                <h6 class="fw-bold mb-1">Coordinator</h6>
+                <p class="text-muted small mb-0">Oversee workflows</p>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+            <div class="role-pill">
+                <i class="bi bi-shield-check"></i>
+                <h6 class="fw-bold mb-1">Admin</h6>
+                <p class="text-muted small mb-0">Full control</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Student Registration | Mashrooi{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center py-5">
+    <div class="col-md-9 col-lg-7">
+        <div class="card p-4 p-md-5">
+            
+            <div class="mb-4 pb-3 text-center card-divider">
+                <div class="icon-circle mx-auto mb-3">
+                    <i class="bi bi-mortarboard-fill"></i>
+                </div>
+                <h4 class="fw-bold mb-1">Student Registration</h4>
+                <p class="text-muted small mb-0">Faculty of Computer Science & IT - Sana'a University</p>
+            </div>
+            
+            <form method="post" novalidate>
+                {% csrf_token %}
+                
+                <div class="row g-3">
+                    <!-- Full Name -->
+                    <div class="col-md-6">
+                        <label class="form-label">Full Name</label>
+                        <div class="input-wrap">
+                            <i class="bi bi-person lead-icon"></i>
+                            {{ form.full_name }}
+                        </div>
+                        {% if form.full_name.errors %}<div class="text-danger small fw-semibold">{{ form.full_name.errors|striptags }}</div>{% endif %}
+                    </div>
+
+                    <!-- Email -->
+                    <div class="col-md-6">
+                        <label class="form-label">Email Address</label>
+                        <div class="input-wrap">
+                            <i class="bi bi-envelope lead-icon"></i>
+                            {{ form.email }}
+                        </div>
+                        {% if form.email.errors %}<div class="text-danger small fw-semibold">{{ form.email.errors|striptags }}</div>{% endif %}
+                    </div>
+
+                    <!-- Student ID -->
+                    <div class="col-md-6">
+                        <label class="form-label">Student ID</label>
+                        <div class="input-wrap">
+                            <i class="bi bi-person-badge lead-icon"></i>
+                            {{ form.student_id }}
+                        </div>
+                        {% if form.student_id.errors %}<div class="text-danger small fw-semibold">{{ form.student_id.errors|striptags }}</div>{% endif %}
+                    </div>
+                    
+
+                    <!-- Department -->
+                    <div class="col-md-6">
+                        <label class="form-label">Department</label>
+                        <div class="input-wrap">
+                            <i class="bi bi-building lead-icon"></i>
+                            {{ form.department }}
+                        </div>
+                        {% if form.department.errors %}<div class="text-danger small fw-semibold">{{ form.department.errors|striptags }}</div>{% endif %}
+                    </div>
+
+                    <!-- Phone -->
+                    <div class="col-md-6">
+                        <label class="form-label">Phone Number</label>
+                        <div class="input-wrap">
+                            <i class="bi bi-telephone lead-icon"></i>
+                            {{ form.phone }}
+                        </div>
+                        {% if form.phone.errors %}<div class="text-danger small fw-semibold">{{ form.phone.errors|striptags }}</div>{% endif %}
+                    </div>
+
+                    <!-- Password -->
+                    <div class="col-md-6">
+                        <label class="form-label">Password</label>
+                        <div class="input-wrap has-toggle">
+                            <i class="bi bi-lock lead-icon"></i>
+                            {{ form.password }}
+                            <button type="button" class="pass-toggle" onclick="togglePassword('{{ form.password.id_for_label }}', this)">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
+                        {% if form.password.errors %}<div class="text-danger small fw-semibold">{{ form.password.errors|striptags }}</div>{% endif %}
+                    </div>
+
+                    <!-- Confirm Password -->
+                    <div class="col-md-6">
+                        <label class="form-label">Confirm Password</label>
+                        <div class="input-wrap has-toggle">
+                            <i class="bi bi-lock-fill lead-icon"></i>
+                            {{ form.confirm_password }}
+                            <button type="button" class="pass-toggle" onclick="togglePassword('{{ form.confirm_password.id_for_label }}', this)">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
+                        {% if form.confirm_password.errors %}<div class="text-danger small fw-semibold">{{ form.confirm_password.errors|striptags }}</div>{% endif %}
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-brand w-100 mt-5 py-3 fs-6">
+                    Register Account <i class="bi bi-arrow-right ms-2"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function togglePassword(inputId, btn) {
+        const input = document.getElementById(inputId);
+        const icon = btn.querySelector('i');
+        if (input.type === "password") {
+            input.type = "text";
+            icon.classList.replace("bi-eye", "bi-eye-slash");
+        } else {
+            input.type = "password";
+            icon.classList.replace("bi-eye-slash", "bi-eye");
+        }
+    }
+</script>
+{% endblock %}

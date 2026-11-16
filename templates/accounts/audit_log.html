@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Audit Log | Mashrooi{% endblock %}
+{% block content %}
+<div class="card p-4 p-md-5">
+    <div class="d-flex align-items-center gap-3 mb-4">
+        <div class="icon-circle icon-circle-sm icon-circle-filled">
+            <i class="bi bi-shield-check"></i>
+        </div>
+        <div>
+            <h4 class="fw-bold mb-0">System Audit Log</h4>
+            <p class="text-muted small mb-0">Track all actions and events across the platform (UC-15).</p>
+        </div>
+    </div>
+
+    <form method="get" class="row g-3 mb-4">
+        <div class="col-md-5">
+            <div class="input-wrap">
+                <i class="bi bi-person lead-icon"></i>
+                <input type="text" name="user" value="{{ request.GET.user }}" class="form-control" placeholder="Filter by user name or email...">
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="input-wrap">
+                <i class="bi bi-search lead-icon"></i>
+                <input type="text" name="action" value="{{ request.GET.action }}" class="form-control" placeholder="Filter by action (e.g. USER_LOGIN)...">
+            </div>
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn-brand w-100 h-100 py-2" style="border-radius: var(--radius-md);">
+                <i class="bi bi-funnel"></i> Filter
+            </button>
+        </div>
+    </form>
+
+    <div class="table-responsive rounded-3" style="border: 1px solid var(--line);">
+        <table class="table table-glass">
+            <thead>
+                <tr>
+                    <th>Timestamp</th>
+                    <th>Actor</th>
+                    <th>Action</th>
+                    <th>Entity</th>
+                    <th>IP</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for log in logs %}
+                <tr>
+                    <td class="small text-muted">{{ log.created_at|date:"Y-m-d H:i:s" }}</td>
+                    <td class="fw-semibold">{{ log.user.email|default:"System/Anonymous" }}</td>
+                    <td><span class="badge-action">{{ log.action }}</span></td>
+                    <td class="small">{{ log.entity_type }} <span class="text-muted">({{ log.entity_id|truncatechars:10 }})</span></td>
+                    <td class="small text-muted">{{ log.ip_address|default:"—" }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="5" class="text-center text-muted py-4">No audit records found.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

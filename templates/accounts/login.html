@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block title %}Sign In | Mashrooi{% endblock %}
+{% block content %}
+<div class="auth-card">
+    <div class="row g-0">
+        <!-- Left Aside -->
+        <div class="col-lg-5 auth-aside d-none d-lg-flex flex-column justify-content-between">
+            <div>
+                <a href="{% url 'home' %}" class="navbar-brand text-white mb-4">
+                    <span class="brand-logo brand-logo-ghost"><i class="bi bi-mortarboard-fill"></i></span>
+                    Mashrooi
+                </a>
+                <h2 class="fw-bold mb-3">Welcome back to your workspace.</h2>
+                <p>Sign in to manage your graduation project,
+                    collaborate with your supervisor, and track your progress all in one place.</p>
+
+                <ul class="aside-checklist">
+                    <li>
+                        <span class="check-icon"><i class="bi bi-check-lg"></i></span> Seamless project tracking
+                    </li>
+                    <li>
+                        <span class="check-icon"><i class="bi bi-check-lg"></i></span> Direct supervisor feedback
+                    </li>
+                    <li>
+                        <span class="check-icon"><i class="bi bi-check-lg"></i></span> Secure committee evaluations
+                    </li>
+                </ul>
+            </div>
+            <div class="mt-5">
+                <p class="mb-0 small opacity-75">Sana'a University · Smart GPMS</p>
+            </div>
+        </div>
+
+        <!-- Right Main (Form) -->
+        <div class="col-lg-7">
+            <div class="auth-main">
+                <div class="d-flex justify-content-end mb-4">
+                    <button type="button" class="btn-icon" onclick="toggleDir()">
+                        <i class="bi bi-translate me-2"></i> عربي / EN
+                    </button>
+                </div>
+
+                <div class="mb-4">
+                    <h1 class="form-title">Sign In</h1>
+                    <p class="form-sub">Enter your credentials to access your dashboard.</p>
+                </div>
+
+                {% if form.non_field_errors %}
+                <div class="alert alert-danger alert-themed mb-4">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    {% for error in form.non_field_errors %} {{ error }} {% endfor %}
+                </div>
+                {% endif %}
+
+                <form method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    {% if next %}
+                    <input type="hidden" name="next" value="{{ next }}">
+                    {% endif %}
+
+                    <div class="mb-3">
+                        <label class="form-label">Email Address</label>
+                        <div class="input-wrap">
+                            <i class="bi bi-envelope lead-icon"></i>
+                            <input type="email" name="{{ form.email.name }}" id="{{ form.email.id_for_label }}"
+                                value="{{ form.email.value|default:'' }}"
+                                class="form-control" placeholder="user@su.edu.ye" required autofocus>
+                        </div>
+                        {% if form.email.errors %}
+                        <div class="text-danger small mt-1 fw-semibold">{{ form.email.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <div class="input-wrap has-toggle">
+                            <i class="bi bi-lock lead-icon"></i>
+                            <input type="password" name="{{ form.password.name }}" id="{{ form.password.id_for_label }}"
+                                class="form-control" placeholder="••••••••" required>
+                            <button type="button" class="pass-toggle" onclick="togglePassword('{{ form.password.id_for_label }}', this)">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
+                        {% if form.password.errors %}
+                        <div class="text-danger small mt-1 fw-semibold">{{ form.password.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mb-4 mt-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="rememberMe">
+                            <label class="form-check-label text-muted" for="rememberMe">Remember me</label>
+                        </div>
+                        <a href="{% url 'password_reset' %}" class="text-decoration-none fw-bold"
+                            style="color: var(--brand); font-size: 0.9rem;">Forgot Password?</a>
+                    </div>
+
+                    <button type="submit" class="btn-brand w-100 py-3 fs-6">
+                        Sign In <i class="bi bi-arrow-right ms-1"></i>
+                    </button>
+                </form>
+
+                <div class="text-center mt-4 pt-4 border-top" style="border-color: var(--line) !important;">
+                    <p class="text-muted small mb-0">
+                        Don't have an account?
+                        <a href="{% url 'student_register' %}" class="text-decoration-none fw-bold ms-1"
+                            style="color: var(--brand);">Register here</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
