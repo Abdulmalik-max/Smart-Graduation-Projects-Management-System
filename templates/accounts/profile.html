@@ -1,35 +1,83 @@
 {% extends "base.html" %}
-{% block title %}My Profile | Mashrooi{% endblock %}
-{% block content %}
-<div class="row justify-content-center py-4">
-    <div class="col-md-8 col-lg-6">
-        <div class="card p-4 p-md-5">
-            <div class="d-flex align-items-center justify-content-between mb-4 pb-3 card-divider">
-                <div class="d-flex align-items-center gap-3">
-                    <div class="profile-avatar">
-                        <i class="bi bi-person-fill fs-4"></i>
-                    </div>
-                    <div>
-                        <h4 class="fw-bold mb-0">My Profile</h4>
-                        <p class="text-muted small mb-0">{{ user.get_role_display }}</p>
-                    </div>
-                </div>
-                <span class="badge-action status-badge-active">{{ user.get_status_display }}</span>
-            </div>
+{% block title %}الملف الشخصي | مشروعي — جامعة صنعاء{% endblock %}
 
-            <form method="post">
-                {% csrf_token %}
-                {% for field in form %}
-                    <div class="mb-3">
-                        <label class="form-label">{{ field.label }}</label>
-                        {{ field }}
-                        {% if field.errors %}<div class="text-danger small mt-1 fw-semibold">{{ field.errors|striptags }}</div>{% endif %}
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-end border-bottom pb-3 mb-4 gap-2">
+    <div>
+        <h1 class="h4 fw-bold text-primary mb-1">الملف الشخصي</h1>
+        <p class="text-secondary small mb-0">{{ user.get_role_display }} — كلية الحاسوب وتكنولوجيا المعلومات</p>
+    </div>
+    <span class="badge" style="background-color: #069b64;">{{ user.get_status_display }}</span>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-4">
+        <div class="card rounded-1">
+            <div class="card-header su-header py-3">
+                <h2 class="h6 fw-bold mb-0">بيانات الحساب</h2>
+            </div>
+            <div class="card-body small">
+                <dl class="mb-0">
+                    <dt class="text-secondary fw-normal">البريد الإلكتروني</dt>
+                    <dd class="fw-semibold border-bottom pb-2 mb-2">{{ user.email }}</dd>
+
+                    {% if user.student_id %}
+                        <dt class="text-secondary fw-normal">الرقم الجامعي</dt>
+                        <dd class="fw-semibold font-monospace border-bottom pb-2 mb-2">{{ user.student_id }}</dd>
+                    {% endif %}
+
+                    {% if user.department %}
+                        <dt class="text-secondary fw-normal">القسم العلمي</dt>
+                        <dd class="fw-semibold border-bottom pb-2 mb-2">{{ user.department.name }}</dd>
+                    {% endif %}
+
+                    <dt class="text-secondary fw-normal">الصفة الأكاديمية</dt>
+                    <dd class="fw-semibold mb-0">{{ user.get_role_display }}</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-8">
+        <div class="card rounded-1">
+            <div class="card-header bg-white py-3">
+                <h2 class="h6 fw-bold text-primary mb-0">تحديث البيانات</h2>
+            </div>
+            <div class="card-body p-4">
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger small py-2 mb-3" role="alert">
+                        {% for error in form.non_field_errors %}
+                            <div>{{ error }}</div>
+                        {% endfor %}
                     </div>
-                {% endfor %}
-                <button type="submit" class="btn-brand w-100 mt-4 py-3">
-                    <i class="bi bi-check-circle me-2"></i> Save Changes
-                </button>
-            </form>
+                {% endif %}
+
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    <div class="row g-3">
+                        {% for field in form %}
+                            <div class="col-md-6">
+                                <label class="form-label small fw-semibold" for="{{ field.id_for_label }}">
+                                    {{ field.label }}
+                                </label>
+                                {{ field }}
+                                {% if field.help_text %}
+                                    <div class="form-text small">{{ field.help_text }}</div>
+                                {% endif %}
+                                {% if field.errors %}
+                                    <div class="text-danger small mt-1">{{ field.errors|striptags }}</div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="border-top mt-4 pt-3 text-end">
+                        <button type="submit" class="btn btn-primary px-4 fw-semibold">
+                            حفظ التعديلات
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>

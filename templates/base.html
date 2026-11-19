@@ -1,120 +1,304 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en" dir="ltr" id="htmlRoot">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="description" content="Mashrooi — Smart Graduation Project Management System for Sana'a University. Submit, track, and evaluate graduation projects." />
-        <title>{% block title %}Mashrooi - Smart GPMS | جامعة صنعاء{% endblock %}</title>
-        
-        <!-- Google Fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-        
-        <link id="bootstrapCss" href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet"/>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
-        
-        <!-- Custom Global Styles -->
-        <link href="{% static 'css/custom.css' %}" rel="stylesheet" />
-    </head>
-    <body>
-    
-    <!-- Background Blobs -->
-    <div class="bg-decor">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
-        <div class="blob blob-3"></div>
+<html lang="ar" dir="rtl" id="htmlRoot">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="مشروعي — النظام الأكاديمي لإدارة مشاريع التخرج بكلية الحاسوب وتكنولوجيا المعلومات، جامعة صنعاء.">
+    <title>{% block title %}مشروعي | بوابة مشاريع التخرج — جامعة صنعاء{% endblock %}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link id="bootstrapCss" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css"
+        data-rtl="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css"
+        data-ltr="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --su-dark: #081d0f;
+            --su-green: #164932;
+            --su-green-hover: #277453;
+            --su-emerald: #069b64;
+            --su-mint: #dbe2d7;
+            --su-gold: #b7852e;
+            --su-parchment: #e1dbcd;
+            --su-danger: #9e3a10;
+            --bs-primary: #164932;
+            --bs-primary-rgb: 22, 73, 50;
+            --bs-body-bg: #fbfbfb;
+            --bs-body-color: #1d201b;
+            --bs-secondary-color: #525a64;
+            --bs-border-color: #d2dae7;
+            --bs-link-color: #164932;
+            --bs-link-hover-color: #277453;
+        }
+
+        body {
+            font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+            background-color: var(--bs-body-bg);
+            color: var(--bs-body-color);
+        }
+
+        .su-topbar {
+            background-color: var(--su-dark);
+            border-bottom: 2px solid var(--su-gold);
+        }
+
+        .su-header {
+            background-color: var(--su-green);
+            color: #fbfbfb;
+            border-bottom: 3px solid var(--su-gold);
+        }
+
+        .btn-primary {
+            --bs-btn-bg: #164932;
+            --bs-btn-border-color: #164932;
+            --bs-btn-hover-bg: #277453;
+            --bs-btn-hover-border-color: #277453;
+            --bs-btn-active-bg: #081d0f;
+            --bs-btn-active-border-color: #081d0f;
+        }
+
+        .btn-outline-primary {
+            --bs-btn-color: #164932;
+            --bs-btn-border-color: #164932;
+            --bs-btn-hover-bg: #164932;
+            --bs-btn-hover-border-color: #164932;
+            --bs-btn-active-bg: #081d0f;
+        }
+
+        .btn-outline-danger {
+            --bs-btn-color: #9e3a10;
+            --bs-btn-border-color: #9e3a10;
+            --bs-btn-hover-bg: #9e3a10;
+            --bs-btn-hover-border-color: #9e3a10;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #277453;
+            box-shadow: 0 0 0 0.2rem rgba(22, 73, 50, 0.18);
+        }
+
+        .nav-link.active {
+            color: #164932 !important;
+            border-bottom: 2px solid #b7852e;
+        }
+    </style>
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- Institutional Top Bar -->
+    <div class="su-topbar text-white small">
+        <div class="container py-2 d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <div>
+                <span class="fw-semibold">الجمهورية اليمنية — جامعة صنعاء</span>
+                <span class="text-white-50 mx-2 d-none d-md-inline">|</span>
+                <span class="text-white-50 d-none d-md-inline">كلية الحاسوب وتكنولوجيا المعلومات</span>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <span class="text-white-50 d-none d-sm-inline">العام الجامعي 2026 / 2027</span>
+                <button type="button" id="dirToggleBtn" class="btn btn-outline-light btn-sm py-0 px-2"
+                    onclick="toggleDir()">
+                    EN
+                </button>
+            </div>
+        </div>
     </div>
 
-    <nav class="navbar navbar-expand-lg app-navbar sticky-top">
+    <!-- Primary Academic Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom sticky-top">
         <div class="container">
-            <a class="navbar-brand" href="{% url 'home' %}">
-                <span class="brand-logo"><i class="bi bi-mortarboard-fill"></i></span>
-                <span>Mashrooi</span>
+            <a class="navbar-brand py-1" href="{% url 'home' %}">
+                <span class="fw-bold text-primary d-block lh-sm">مشروعي <span class="fw-normal text-secondary fs-6">|
+                        Mashrooi</span></span>
+                <span class="text-secondary small d-block lh-sm">بوابة مشاريع التخرج الأكاديمية</span>
             </a>
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
-                    aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                aria-controls="mainNav" aria-expanded="false" aria-label="القائمة الرئيسية">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="mainNav">
-                <ul class="nav-left-links">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-lg-1">
                     <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}">
-                            <i class="bi bi-house-door me-1"></i>Home
-                        </a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active fw-semibold{% endif %}"
+                            href="{% url 'home' %}">الرئيسية</a>
                     </li>
                     {% if user.is_authenticated %}
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'profile' %}active{% endif %}" href="{% url 'profile' %}">
-                                <i class="bi bi-person-circle me-1"></i>Profile
-                            </a>
-                        </li>
-                        {% if user.role == 'ADMIN' %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'user_list' %}"><i class="bi bi-people me-1"></i>Users</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'staff_invite' %}"><i class="bi bi-envelope-plus me-1"></i>Invite</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'audit_log' %}"><i class="bi bi-clock-history me-1"></i>Audit</a>
-                            </li>
-                        {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'profile' %}active fw-semibold{% endif %}"
+                            href="{% url 'profile' %}">الملف الشخصي</a>
+                    </li>
+                    {% if user.role == 'ADMIN' %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'user_list' %}active fw-semibold{% endif %}"
+                            href="{% url 'user_list' %}">إدارة المستخدمين</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'staff_invite' %}active fw-semibold{% endif %}"
+                            href="{% url 'staff_invite' %}">دعوة كادر</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'audit_log' %}active fw-semibold{% endif %}"
+                            href="{% url 'audit_log' %}">سجل العمليات</a>
+                    </li>
+                    {% endif %}
                     {% endif %}
                 </ul>
 
-                <div class="nav-right-actions">
-                    <button type="button" class="btn-icon" onclick="toggleDir()" title="Toggle Language">
-                        <i class="bi bi-translate"></i>
-                    </button>
-
+                <div class="d-flex align-items-center gap-2 mt-2 mt-lg-0">
                     {% if user.is_authenticated %}
-                        <div class="dropdown">
-                            <button class="user-chip dropdown-toggle border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="avatar">{{ user.full_name|default:user.email|slice:":1"|upper }}</span>
-                                <span class="d-none d-md-inline fw-bold">{{ user.full_name|default:user.email }}</span>
-                                <span class="role-badge d-none d-sm-inline">{{ user.get_role_display }}</span>
-                                <i class="bi bi-chevron-down chevron"></i>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="{% url 'profile' %}"><i class="bi bi-person me-2"></i>My Profile</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item text-danger" href="{% url 'logout' %}"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
-                            </ul>
-                        </div>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-primary btn-sm dropdown-toggle d-flex align-items-center gap-2"
+                            type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-fill"></i>
+                            <span>{{ user.full_name|default:user.email }}</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li class="px-3 py-2 border-bottom">
+                                <div class="fw-semibold small">{{ user.full_name|default:user.email }}</div>
+                                <div class="text-secondary small">{{ user.email }}</div>
+                                <span class="badge text-bg-secondary mt-1">{{ user.get_role_display }}</span>
+                            </li>
+                            <li>
+                                <a class="dropdown-item small" href="{% url 'profile' %}">
+                                    <i class="bi bi-person me-2"></i>الملف الشخصي
+                                </a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider my-1">
+                            </li>
+                            <li>
+                                <a class="dropdown-item small text-danger" href="{% url 'logout' %}">
+                                    <i class="bi bi-box-arrow-left me-2"></i>تسجيل الخروج
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                     {% else %}
-                        <a href="{% url 'login' %}" class="nav-link" style="padding-inline: 1rem;">Login</a>
-                        <a href="{% url 'student_register' %}" class="btn-brand">
-                            <i class="bi bi-person-plus"></i> Register
-                        </a>
+                    <a href="{% url 'login' %}" class="btn btn-outline-primary btn-sm px-3">تسجيل الدخول</a>
+                    <a href="{% url 'student_register' %}" class="btn btn-primary btn-sm px-3">تسجيل طالب</a>
                     {% endif %}
                 </div>
             </div>
         </div>
     </nav>
 
-    <main class="container py-5">
-        {% if messages %} 
-            {% for message in messages %}
-            <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show" role="alert" style="border-radius: var(--radius-md);">
-                {{ message }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-            {% endfor %} 
-        {% endif %} 
-        
+    <!-- Main Content -->
+    <main class="container py-4 flex-grow-1">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags|default:'secondary' }}{% endif %} alert-dismissible fade show py-2 small"
+            role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="إغلاق"></button>
+        </div>
+        {% endfor %}
+        {% endif %}
+
         {% block content %}{% endblock %}
     </main>
 
-    <footer class="app-footer">
+    <!-- Institutional Footer -->
+    <footer class="bg-white border-top mt-auto py-4">
         <div class="container">
-            <div class="footer-brand"><i class="bi bi-mortarboard-fill"></i> Mashrooi</div>
-            <div class="footer-divider"></div>
-            <p class="mb-0">Smart GPMS · <strong>جامعة صنعاء</strong> · Sana'a University</p>
+            <div class="row g-4 small">
+                <div class="col-lg-5">
+                    <h6 class="fw-bold text-primary mb-2">جامعة صنعاء — كلية الحاسوب وتكنولوجيا المعلومات</h6>
+                    <p class="text-secondary mb-2">
+                        البوابة الرسمية لإدارة وتوثيق مشاريع التخرج وتنسيق الإشراف الأكاديمي ولجان المناقشة العلمية.
+                    </p>
+                    <p class="text-secondary mb-0">
+                        <i class="bi bi-geo-alt me-1"></i>الحرم الجامعي الجديد، صنعاء، الجمهورية اليمنية
+                    </p>
+                </div>
+
+                <div class="col-6 col-lg-3">
+                    <h6 class="fw-bold mb-2">الأقسام العلمية</h6>
+                    <ul class="list-unstyled text-secondary mb-0">
+                        <li class="mb-1">نظم المعلومات (IS)</li>
+                        <li class="mb-1">علوم الحاسوب (CS)</li>
+                        <li class="mb-1">تكنولوجيا المعلومات (IT)</li>
+                        <li class="mb-1">الأمن السيبراني (CYS)</li>
+                        <li class="mb-1">الذكاء الاصطناعي (AI)</li>
+                        <li>علم البيانات (DS)</li>
+                    </ul>
+                </div>
+
+                <div class="col-6 col-lg-4">
+                    <h6 class="fw-bold mb-2">اللوائح والدعم الأكاديمي</h6>
+                    <ul class="list-unstyled text-secondary mb-0">
+                        <li class="mb-1">دليل إعداد مقترح مشروع التخرج</li>
+                        <li class="mb-1">لائحة الإشراف ومناقشات التخرج</li>
+                        <li class="mb-1">سياسة الأمانة العلمية وفحص الأصالة</li>
+                        <li>وحدة تكنولوجيا المعلومات وشؤون الطلاب بالكلية</li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr class="my-3">
+
+            <div class="d-flex flex-wrap justify-content-between align-items-center text-secondary small gap-2">
+                <span>© 2026 جامعة صنعاء — كلية الحاسوب وتكنولوجيا المعلومات.</span>
+                <span>Faculty of Computer &amp; Information Technology, Sana'a University</span>
+            </div>
         </div>
     </footer>
 
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'js/custom.js' %}"></script>
-    </body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function applyDir(dir) {
+            const html = document.getElementById("htmlRoot");
+            const css = document.getElementById("bootstrapCss");
+            const btn = document.getElementById("dirToggleBtn");
+            if (!html || !css) return;
+
+            if (dir === "ltr") {
+                html.setAttribute("dir", "ltr");
+                html.setAttribute("lang", "en");
+                css.href = css.getAttribute("data-ltr");
+                if (btn) btn.textContent = "عربي";
+            } else {
+                html.setAttribute("dir", "rtl");
+                html.setAttribute("lang", "ar");
+                css.href = css.getAttribute("data-rtl");
+                if (btn) btn.textContent = "EN";
+            }
+        }
+
+        function toggleDir() {
+            const current = document.getElementById("htmlRoot").getAttribute("dir") || "rtl";
+            const next = current === "rtl" ? "ltr" : "rtl";
+            sessionStorage.setItem("su_portal_dir", next);
+            applyDir(next);
+        }
+
+        (function () {
+            const saved = sessionStorage.getItem("su_portal_dir");
+            if (saved === "ltr" || saved === "rtl") applyDir(saved);
+        })();
+
+        function togglePassword(inputId, btn) {
+            const input = document.getElementById(inputId);
+            if (!input) return;
+            const icon = btn.querySelector("i");
+            if (input.type === "password") {
+                input.type = "text";
+                if (icon) icon.classList.replace("bi-eye", "bi-eye-slash");
+            } else {
+                input.type = "password";
+                if (icon) icon.classList.replace("bi-eye-slash", "bi-eye");
+            }
+        }
+    </script>
+</body>
+
 </html>

@@ -28,19 +28,18 @@ from .forms import (
 # ********************* Home *********************
 def home_view(request):
     """
-        Public landing page. Signed-in users get a direct dashboard CTA.
+    Public landing page for guests. Authenticated users are redirected
+    directly to their role-based dashboard.
     """
-    dashboard_url = None
     if request.user.is_authenticated:
-        dashboard_url = reverse(get_role_dashboard_url(request.user))
-    return render(request, "home.html", {"dashboard_url": dashboard_url})
-
+        return redirect(get_role_dashboard_url(request.user))
+    return render(request, "home.html")
 
 
 # ********************* Role based Dashboards *********************
 def get_role_dashboard_url(user):
     """
-        Redirect users to their role-based dashboard.
+    Redirect users to their role-based dashboard.
     """
     dashboard_map = {
         User.Role.ADMIN:       "user_list",
@@ -284,6 +283,7 @@ def staff_invite_view(request):
 
     return render(request, "accounts/staff_invite.html", {"form": form})
 
+
 # ********************* Activate Staff Account *********************
 def activate_staff_account_view(request, uidb64, token):
     try:
@@ -313,6 +313,10 @@ def activate_staff_account_view(request, uidb64, token):
                 return redirect("login")
         else:
             form = SetPasswordForm(user)
+
+        for field in form.fields.values():
+            field.widget.attrs.setdefault("class", "form-control")
+
         return render(
             request, "accounts/set_invited_password.html",
             {"form": form, "validlink": True},

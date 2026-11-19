@@ -15,19 +15,26 @@ env/
 *.sqlite3
 db.sqlite3
 media/
+staticfiles/
 
-# IDE
+# Logs
+*.log
+
+# IDE & AI Assistant Environments
 .idea/
 .vscode/
 *.swp
 *.swo
 *~
 
+
+
 # OS
 .DS_Store
 Thumbs.db
 desktop.ini
 
-# Environment variables
+# Environment variables & secrets
 .env
 *.env.local
+

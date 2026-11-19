@@ -22,7 +22,7 @@ class DepartmentChoiceField(forms.ChoiceField):
     DEPARTMENT_NAMES = ["IS", "CS", "IT", "CYS", "AI", "DS"]
 
     def __init__(self, *args, **kwargs):
-        choices = [("", "Select Department")] + [(name, name) for name in self.DEPARTMENT_NAMES]
+        choices = [("", "اختر القسم")] + [(name, name) for name in self.DEPARTMENT_NAMES]
         kwargs.setdefault("choices", choices)
         kwargs.setdefault("required", True)
         super().__init__(*args, **kwargs)
@@ -42,7 +42,7 @@ class DepartmentChoiceField(forms.ChoiceField):
         try:
             if Department.objects.filter(pk=value).exists():
                 return
-        except (ValueError, TypeError):
+        except (ValueError, TypeError, forms.ValidationError):
             pass
         raise forms.ValidationError("Select a valid department.")
 
@@ -56,7 +56,7 @@ class DepartmentChoiceField(forms.ChoiceField):
             dept = Department.objects.filter(pk=val).first()
             if dept:
                 return dept
-        except (ValueError, TypeError):
+        except (ValueError, TypeError, forms.ValidationError):
             dept = None
 
         # 2. Lookup or create by predefined department name
@@ -88,10 +88,10 @@ class StudentRegistrationForm(BootstrapFormMixin, forms.ModelForm):
         model = User
         fields = ["full_name", "email", "student_id", "department", "phone"]
         widgets = {
-            "full_name":  forms.TextInput(attrs={"placeholder": "Full Name"}),
-            "email":      forms.EmailInput(attrs={"placeholder": "student@su.edu.ye"}),
+            "full_name": forms.TextInput(attrs={"placeholder": "Full Name"}),
+            "email": forms.EmailInput(attrs={"placeholder": "student@su.edu.ye"}),
             "student_id": forms.TextInput(attrs={"placeholder": "24160126"}),
-            "phone":      forms.TextInput(attrs={"placeholder": "77xxxxxxx"}),
+            "phone": forms.TextInput(attrs={"placeholder": "77xxxxxxx"}),
         }
 
     def __init__(self, *args, **kwargs):

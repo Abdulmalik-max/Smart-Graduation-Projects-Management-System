@@ -1,120 +1,238 @@
-{% extends "base.html" %}
-{% load static %}
-
-{% block title %}Mashrooi | Smart GPMS{% endblock %}
-
-{% block content %}
-<section class="hero-section mb-5">
-    <div class="container position-relative z-1">
-        {% if user.is_authenticated %}
-            <span class="badge bg-white text-primary mb-3 px-3 py-2 rounded-pill fw-bold" style="color: var(--brand) !important;">
-                {{ user.get_role_display }} Account
-            </span>
-            <h1 class="hero-title">Welcome back, {{ user.get_full_name|default:user.username }}</h1>
-            <p class="hero-subtitle">Continue where you left off. Your dashboard is ready for you.</p>
-            <div class="d-flex justify-content-center gap-3 flex-wrap mt-4">
-                <a href="{{ dashboard_url }}" class="btn-brand px-5 py-3 fs-5">
-                    <i class="bi bi-speedometer2"></i> Go to Dashboard
-                </a>
-            </div>
-        {% else %}
-            <h1 class="hero-title">Mashrooi | مشروعي</h1>
-            <p class="hero-subtitle">
-                A unified platform that connects students, supervisors, committees, and administrators
-                to streamline graduation project proposals at Sana'a University.
+{% extends "base.html" %} {% load static %} {% block title %}الرئيسية | بوابة
+مشاريع التخرج — جامعة صنعاء{% endblock %} {% block content %}
+<!-- Institutional Portal Header -->
+<section class="bg-white border rounded-1 mb-4 p-4">
+    <div class="row align-items-center g-4">
+        <div class="col-lg-8">
+            <p class="text-secondary small mb-1">
+                جامعة صنعاء · كلية الحاسوب وتكنولوجيا المعلومات
             </p>
-            <div class="d-flex justify-content-center gap-3 flex-wrap mt-4">
-                <a href="{% url 'login' %}" class="btn btn-light px-5 py-3 fs-5 rounded-4 fw-bold text-primary">
-                    Login
+            {% if user.is_authenticated %}
+            <h1 class="h3 fw-bold text-primary mb-2">
+                مرحباً، {{ user.full_name|default:user.username }}
+            </h1>
+            <p class="text-secondary mb-3">
+                تابع حالة مشروع التخرج، ارفع المقترحات وتقارير الإنجاز، واطّلع على
+                ملاحظات المشرف ومواعيد المناقشة.
+            </p>
+            <div class="d-flex flex-wrap gap-2">
+                <a href="{{ dashboard_url }}" class="btn btn-primary px-4">
+                    <i class="bi bi-speedometer2 me-2"></i>لوحة التحكم
                 </a>
-                <a href="{% url 'student_register' %}" class="btn-brand px-5 py-3 fs-5">
-                    Register
+                <a href="{% url 'profile' %}" class="btn btn-outline-primary px-4">
+                    <i class="bi bi-person me-2"></i>الملف الشخصي
                 </a>
             </div>
-        {% endif %}
+            {% else %}
+            <h1 class="h3 fw-bold text-primary mb-2">
+                بوابة إدارة مشاريع التخرج الأكاديمية (مشروعي)
+            </h1>
+            <p class="text-secondary mb-3">
+                المنصة الرسمية لكلية الحاسوب وتكنولوجيا المعلومات بجامعة صنعاء لتنظيم
+                تسجيل مشاريع التخرج، توزيع الإشراف الأكاديمي، ومتابعة مراحل الإنجاز
+                والتحكيم.
+            </p>
+            <div class="d-flex flex-wrap gap-2">
+                <a href="{% url 'login' %}" class="btn btn-primary px-4">
+                    <i class="bi bi-box-arrow-in-left me-2"></i>دخول الكادر الأكاديمي
+                    والطلاب
+                </a>
+                <a href="{% url 'student_register' %}" class="btn btn-outline-primary px-4">
+                    <i class="bi bi-person-plus me-2"></i>تسجيل طالب جديد
+                </a>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="col-lg-4">
+            <div class="border rounded-1 p-3 small" style="background-color: #dbe2d7">
+                <div class="fw-bold text-primary border-bottom border-secondary-subtle pb-2 mb-2">
+                    الدورة الأكاديمية الحالية
+                </div>
+                <dl class="row mb-0">
+                    <dt class="col-5 text-secondary fw-normal">العام الجامعي</dt>
+                    <dd class="col-7 fw-semibold mb-1">2026 / 2027</dd>
+                    <dt class="col-5 text-secondary fw-normal">الأقسام</dt>
+                    <dd class="col-7 fw-semibold mb-1">6 أقسام علمية</dd>
+                    <dt class="col-5 text-secondary fw-normal">التسجيل</dt>
+                    <dd class="col-7 mb-0">
+                        <span class="badge" style="background-color: #069b64">مفتوح للطلاب</span>
+                    </dd>
+                </dl>
+            </div>
+        </div>
     </div>
 </section>
 
-<!-- Features -->
-<section class="mb-5 py-3">
-    <div class="text-center mb-5">
-        <h2 class="fw-bold section-title">Everything in one place</h2>
-        <p class="text-muted section-sub">Designed around the way graduation projects actually work.</p>
-    </div>
-    <div class="row g-4">
-        <div class="col-md-6 col-lg-3">
-            <div class="feature-card">
-                <div class="feature-icon"><i class="bi bi-person-plus-fill"></i></div>
-                <h5 class="fw-bold mb-2">Student Registration</h5>
-                <p class="text-muted small mb-0">Create an account with your university email and student ID. Instant access to your dashboard.</p>
+<!-- Main Portal Layout -->
+<div class="row g-4">
+    <div class="col-lg-8">
+        <!-- Graduation Project Stages -->
+        <section class="card rounded-1 mb-4">
+            <div class="card-header bg-white py-3">
+                <h2 class="h6 fw-bold text-primary mb-0">
+                    المسار الأكاديمي لمشروع التخرج
+                </h2>
             </div>
-        </div>
-        <div class="col-md-6 col-lg-3">
-            <div class="feature-card">
-                <div class="feature-icon"><i class="bi bi-envelope-paper-fill"></i></div>
-                <h5 class="fw-bold mb-2">Staff Invitation</h5>
-                <p class="text-muted small mb-0">Administrators invite supervisors, committee members, and coordinators by email with secure links.</p>
+            <div class="table-responsive">
+                <table class="table table-bordered align-middle mb-0 small">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="text-nowrap">المرحلة</th>
+                            <th>المتطلبات والمخرجات الأساسية</th>
+                            <th class="text-nowrap">الجهة المعتمدة</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="fw-semibold text-nowrap">1. تقديم المقترح</td>
+                            <td>
+                                تشكيل الفريق وتقديم وثيقة المقترح (المشكلة، الأهداف، النطاق،
+                                والتقنيات).
+                            </td>
+                            <td class="text-secondary text-nowrap">مجلس القسم</td>
+                        </tr>
+                        <tr>
+                            <td class="fw-semibold text-nowrap">2. إسناد الإشراف</td>
+                            <td>
+                                توزيع المشرفين وفق التخصص ونصاب الإشراف المعتمد، وبدء اللقاءات
+                                الدورية.
+                            </td>
+                            <td class="text-secondary text-nowrap">منسق القسم</td>
+                        </tr>
+                        <tr>
+                            <td class="fw-semibold text-nowrap">3. التقييم النصفي</td>
+                            <td>
+                                تسليم فصول التوثيق الأولية وعرض النموذج التجريبي لتقييم نسبة
+                                الإنجاز.
+                            </td>
+                            <td class="text-secondary text-nowrap">المشرف الأكاديمي</td>
+                        </tr>
+                        <tr>
+                            <td class="fw-semibold text-nowrap">4. المناقشة النهائية</td>
+                            <td>
+                                المناقشة أمام لجنة التحكيم، رصد الدرجات، وإيداع النسخة النهائية
+                                بالأرشيف.
+                            </td>
+                            <td class="text-secondary text-nowrap">لجنة التحكيم</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-        </div>
-        <div class="col-md-6 col-lg-3">
-            <div class="feature-card">
-                <div class="feature-icon"><i class="bi bi-shield-lock-fill"></i></div>
-                <h5 class="fw-bold mb-2">Role-Based Access</h5>
-                <p class="text-muted small mb-0">Each role sees exactly what they need — nothing more. Permissions are strictly enforced.</p>
-            </div>
-        </div>
-        <div class="col-md-6 col-lg-3">
-            <div class="feature-card">
-                <div class="feature-icon"><i class="bi bi-clock-history"></i></div>
-                <h5 class="fw-bold mb-2">Security &amp; Audit</h5>
-                <p class="text-muted small mb-0">3-attempt lockout, secure password reset, and a full audit trail of every action taken.</p>
-            </div>
-        </div>
-    </div>
-</section>
+        </section>
 
-<!-- Roles -->
-<section class="mb-5 py-3">
-    <div class="text-center mb-4">
-        <h2 class="fw-bold section-title" style="font-size: 2rem;">Built for every role</h2>
-        <p class="text-muted">Five carefully separated roles, one shared workflow.</p>
+        <!-- Academic Departments -->
+        <section class="card rounded-1">
+            <div class="card-header bg-white py-3">
+                <h2 class="h6 fw-bold text-primary mb-0">الأقسام العلمية بالكلية</h2>
+            </div>
+            <div class="card-body">
+                <div class="row row-cols-1 row-cols-md-2 g-2 small">
+                    <div class="col">
+                        <div class="border rounded-1 p-2 d-flex justify-content-between align-items-center">
+                            <div>
+                                <div class="fw-semibold">قسم نظم المعلومات</div>
+                                <div class="text-secondary">Information Systems</div>
+                            </div>
+                            <span class="badge text-bg-light border font-monospace">IS</span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="border rounded-1 p-2 d-flex justify-content-between align-items-center">
+                            <div>
+                                <div class="fw-semibold">قسم علوم الحاسوب</div>
+                                <div class="text-secondary">Computer Science</div>
+                            </div>
+                            <span class="badge text-bg-light border font-monospace">CS</span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="border rounded-1 p-2 d-flex justify-content-between align-items-center">
+                            <div>
+                                <div class="fw-semibold">قسم تكنولوجيا المعلومات</div>
+                                <div class="text-secondary">Information Technology</div>
+                            </div>
+                            <span class="badge text-bg-light border font-monospace">IT</span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="border rounded-1 p-2 d-flex justify-content-between align-items-center">
+                            <div>
+                                <div class="fw-semibold">قسم الأمن السيبراني</div>
+                                <div class="text-secondary">Cybersecurity</div>
+                            </div>
+                            <span class="badge text-bg-light border font-monospace">CYS</span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="border rounded-1 p-2 d-flex justify-content-between align-items-center">
+                            <div>
+                                <div class="fw-semibold">قسم الذكاء الاصطناعي</div>
+                                <div class="text-secondary">Artificial Intelligence</div>
+                            </div>
+                            <span class="badge text-bg-light border font-monospace">AI</span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="border rounded-1 p-2 d-flex justify-content-between align-items-center">
+                            <div>
+                                <div class="fw-semibold">قسم علم البيانات</div>
+                                <div class="text-secondary">Data Science</div>
+                            </div>
+                            <span class="badge text-bg-light border font-monospace">DS</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
-    <div class="row g-3 justify-content-center">
-        <div class="col-6 col-md-4 col-lg-2">
-            <div class="role-pill">
-                <i class="bi bi-mortarboard"></i>
-                <h6 class="fw-bold mb-1">Student</h6>
-                <p class="text-muted small mb-0">Register projects</p>
+
+    <!-- Academic Calendar Sidebar -->
+    <aside class="col-lg-4">
+        <div class="card rounded-1 mb-4">
+            <div class="card-header su-header py-3 d-flex justify-content-between align-items-center">
+                <h2 class="h6 fw-bold mb-0">التقويم الأكاديمي للمشاريع</h2>
+                <span class="small text-white-50">2026/2027</span>
             </div>
+            <ul class="list-group list-group-flush small">
+                <li class="list-group-item py-3">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <span class="fw-bold">تقديم مقترحات المشاريع</span>
+                        <span class="badge text-bg-light border">15 أكتوبر</span>
+                    </div>
+                    <p class="text-secondary mb-0">
+                        آخر موعد لرفع مسودات المقترحات عبر البوابة.
+                    </p>
+                </li>
+                <li class="list-group-item py-3">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <span class="fw-bold">اعتماد المشرفين والفرق</span>
+                        <span class="badge text-bg-light border">01 نوفمبر</span>
+                    </div>
+                    <p class="text-secondary mb-0">
+                        إعلان موافقة مجالس الأقسام وتثبيت المشرفين.
+                    </p>
+                </li>
+                <li class="list-group-item py-3">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <span class="fw-bold">المناقشة النصفية</span>
+                        <span class="badge text-bg-light border">15 ديسمبر</span>
+                    </div>
+                    <p class="text-secondary mb-0">
+                        تسليم فصول التوثيق ومراجعة النموذج الأولي.
+                    </p>
+                </li>
+                <li class="list-group-item py-3">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <span class="fw-bold">المناقشات النهائية</span>
+                        <span class="badge text-bg-light border">20 يناير</span>
+                    </div>
+                    <p class="text-secondary mb-0">
+                        المناقشة أمام اللجان العلمية والأرشفة.
+                    </p>
+                </li>
+            </ul>
         </div>
-        <div class="col-6 col-md-4 col-lg-2">
-            <div class="role-pill">
-                <i class="bi bi-person-video3"></i>
-                <h6 class="fw-bold mb-1">Supervisor</h6>
-                <p class="text-muted small mb-0">Guide projects</p>
-            </div>
-        </div>
-        <div class="col-6 col-md-4 col-lg-2">
-            <div class="role-pill">
-                <i class="bi bi-people"></i>
-                <h6 class="fw-bold mb-1">Committee</h6>
-                <p class="text-muted small mb-0">Evaluate submissions</p>
-            </div>
-        </div>
-        <div class="col-6 col-md-4 col-lg-2">
-            <div class="role-pill">
-                <i class="bi bi-diagram-3"></i>
-                <h6 class="fw-bold mb-1">Coordinator</h6>
-                <p class="text-muted small mb-0">Oversee workflows</p>
-            </div>
-        </div>
-        <div class="col-6 col-md-4 col-lg-2">
-            <div class="role-pill">
-                <i class="bi bi-shield-check"></i>
-                <h6 class="fw-bold mb-1">Admin</h6>
-                <p class="text-muted small mb-0">Full control</p>
-            </div>
-        </div>
-    </div>
-</section>
+    </aside>
+</div>
 {% endblock %}
